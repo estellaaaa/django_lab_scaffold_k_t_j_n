@@ -22,7 +22,7 @@
     <th>Participant</th>
     <th>Start Time</th>
   </tr>
-
+  
   {% for participant in meetup.participants.all %}
     <tr>
       <td>
@@ -30,9 +30,11 @@
           {{ participant.get_full_name }} ({{ participant.get_username }})
         </a>
       </td>
-      <td>{{ meetup.start_time }}</td>
+      <td>{{ meetup.start_time | date:'d.m.Y H:i' }}</td>
     </tr>
   {% endfor %}
 </table>
+
+<p>Number of Participants: {{ meetup.participants.all | length }}</p>
 
 {% endblock content %}
