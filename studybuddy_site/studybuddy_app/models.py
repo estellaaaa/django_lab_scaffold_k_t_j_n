@@ -32,6 +32,8 @@ def tomorrow():
 
 class Meetup(models.Model):
     title = models.CharField(max_length=50)
+    topic = models.CharField(max_length=100, default=0)
+    course = models.CharField(max_length=100, default=0)
     location = models.CharField(max_length=50, blank=True)
     start_time = ConvertingDateTimeField("start time", default=tomorrow)
     duration = models.DurationField(default=datetime.timedelta(hours=1))
@@ -46,6 +48,18 @@ class Meetup(models.Model):
     def is_upcoming(self):
         soon = timezone.now() + datetime.timedelta(days=2)
         return self.start_time >= timezone.now() and self.start_time <= soon
+
+class MeetupSearch(models.Model):
+    title = models.CharField(max_length=100)
+    topic = models.CharField(max_length=100, default=0)
+    course = models.CharField(max_length=100, default=0)
+    location = models.CharField(max_length=100, blank=True)
+    start_time = ConvertingDateTimeField("start time", default=tomorrow)
+    duration = models.DurationField(default=datetime.timedelta(hours=1))
+    participants = models.ManyToManyField(settings.AUTH_USER_MODEL)
+
+    def __str__(self):
+        return self.title
 
 
 # many_to_many: https://docs.djangoproject.com/en/4.2/topics/db/examples/many_to_many/
