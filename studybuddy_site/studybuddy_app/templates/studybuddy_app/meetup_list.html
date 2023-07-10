@@ -5,7 +5,7 @@
 
 <h1>{% if all_meetups %}All{% else %} Upcoming{% endif %}
   Meetups</h1>
-
+  
 <a href="{% url "studybuddy_app:meetup.new" %}">New Meetup</a> |
 <a href="{% url 'studybuddy_app:meetup.list'%}{% if not all_meetups %}?meetups=all{% endif %}">
 show {% if all_meetups %}upcoming{% else %}all{% endif %}
@@ -17,19 +17,20 @@ show {% if all_meetups %}upcoming{% else %}all{% endif %}
     <thead>
       <tr>
         <th scope="col">title</th>
+        <th scope="col">topic</th>
+        <th scope="col">course</th>
         <th scope="col">id</th>
-        <th scope="col">date</th>
-        <th scope="col">participants</th>
       </tr>
     </thead>
     <tbody>
     {% for meetup in meetup_list %}
     <tr>
         <td align="left"><a href="{% url 'studybuddy_app:meetup.detail' meetup.id %}">{{ meetup.title }}</a></td>
-        <td align="left">id: {{ meetup.id }}</td>
-        <td align="left">date: {{ meetup.start_time | date:'d.m.Y H:m' }}</td>
-        <td align="left">{{meetup.participants.all | length}}</td>
-    </tr>
+        <td align="left">(: {{ meetup.start_time }})</td>
+        <td align="left">(: {{ meetup.topic }})</td>
+        <td align="left">(: {{ meetup.course }})</td>
+        <td align="left">(id: {{ meetup.id }})</td>
+      </tr>
     {% endfor %}
     </tbody>
 </table>
