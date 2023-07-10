@@ -3,6 +3,9 @@ from .views import user as user_views
 from .views import meetup as meetup_views
 from .views.meetup import MeetupListView
 from .views.meetup import MeetupDetailView
+from .views.meetupsearch import MeetupSearchListView
+from .views.meetupsearch_detail import MeetupSearchDetailView
+
 app_name = "studybuddy_app"
 
 urlpatterns = [
@@ -16,9 +19,16 @@ urlpatterns = [
     path("meetups/<int:pk>/delete", meetup_views.delete, name="meetup.delete"),
     path("meetups/<int:pk>/edit", meetup_views.edit, name="meetup.edit"),
 
-    path("", MeetupListView.as_view(), name="index"),
+    path("", MeetupListView.as_view(), name="home"),
 
-    path("users/<int:pk>", user_views.detail, name="user.detail")
+    path("users/<int:pk>", user_views.detail, name="user.detail"),
+
+    path("meetups/<int:pk>/cancel_participation", meetup_views.cancel_participation, name="meetup.cancel_participation"),
+
+    path("meetupsearch/", MeetupSearchListView.as_view(), name="meetupsearch.list"),
+
+    path("meetupsearch/<int:pk>/", MeetupSearchDetailView.as_view(), name="meetupsearch.detail"),
+
 ]
 
 # https://restfulapi.net/
