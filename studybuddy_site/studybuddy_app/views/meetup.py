@@ -111,7 +111,10 @@ def delete(request, pk):
 def rsvp(request, pk):
     if request.user.is_authenticated:
         meetup = Meetup.objects.get(pk=pk)
-        meetup.participants.add(request.user)
+        if meetup.participants.contains(request.user):
+            meetup.participants.remove(request.user)
+        else:
+            meetup.participants.add(request.user)
     return HttpResponseRedirect(
         reverse("studybuddy_app:meetup.detail",
                 args=[meetup.id]))
