@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Meetup Details{% endblock %}
+{% block content %}
+
+<h1>Meetup Details</h1>
+<hr/>
+
+<div class="meetup-details">
+  <h2>{{ meetup.title }}</h2>
+  <p><strong>Topic:</strong> {{ meetup.topic }}</p>
+  <p><strong>Course:</strong> {{ meetup.course }}</p>
+  <p><strong>Location:</strong> {{ meetup.location }}</p>
+  <p><strong>When?:</strong> {{ meetup.start_time }}</p>
+  <p><strong>Duration:</strong> {{ meetup.duration }}</p>
+  <!-- Add more fields as needed -->
+</div>
+
+<hr/>
+
+{% if request.user in meetup.participants.all %}
+  <a href="{% url 'studybuddy_app:meetup.cancel_participation' meetup.id %}" name="cancel">Cancel Participation</a>
+{% else %}
+  <a href="{% url 'studybuddy_app:meetup.rsvp' meetup.id %}" name="rsvp">Participate</a>
+{% endif %}
+
+<h2>Participants</h2>
+
+<table>
+  <tr>
+    <th>Participant</th>
+    <th>Start Time</th>
+  </tr>
+
+  {% for participant in meetup.participants.all %}
+    <tr>
+      <td>
+        <a href="{% url 'studybuddy_app:user.detail' participant.id %}">
+          {{ participant.get_full_name }} ({{ participant.get_username }})
+        </a>
+      </td>
+      <td>{{ meetup.start_time | date:'d.m.Y H:i' }}</td>
+    </tr>
+  {% endfor %}
+</table>
+
+<p>Number of Participants: {{ meetup.participants.all | length }}</p>
+
+<a href="{% url 'studybuddy_app:meetupsearch.list' %}">Back to Meetup Search</a>
+
+{% endblock content %}
