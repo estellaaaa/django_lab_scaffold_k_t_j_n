@@ -13,23 +13,26 @@
 <p>Duration: {{ meetup.duration }}</p>
 <hr/>
 
-{% if user not in participants %}
 <a href="{% url 'studybuddy_app:meetup.rsvp' meetup.id %}" name="rsvp">Participate</a>
-{% else %}
-<a href="{% url 'studybuddy_app:meetup.rsvp' meetup.id %}" name="rsvp">Cancel</a>
-{% endif %}
 
 <h2>Participants</h2>
 
-{% for participant in participants %}
+<table>
+  <tr>
+    <th>Participant</th>
+    <th>Start Time</th>
+  </tr>
 
-<p>
-    <a href="{% url 'studybuddy_app:user.detail' participant.id %}">
-        {{ participant.get_full_name }}({{ participant.get_username }})
-    </a>
-</p>
-
-{% endfor %}
-
+  {% for participant in meetup.participants.all %}
+    <tr>
+      <td>
+        <a href="{% url 'studybuddy_app:user.detail' participant.id %}">
+          {{ participant.get_full_name }} ({{ participant.get_username }})
+        </a>
+      </td>
+      <td>{{ meetup.start_time }}</td>
+    </tr>
+  {% endfor %}
+</table>
 
 {% endblock content %}
