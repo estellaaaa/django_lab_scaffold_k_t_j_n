@@ -12,9 +12,9 @@
 <p>When?: {{ meetup.start_time }}</p>
 <p>Duration: {{ meetup.duration }}</p>
 <hr/>
-
+{% if user not in participants %}
 <a href="{% url 'studybuddy_app:meetup.rsvp' meetup.id %}" name="rsvp">Participate</a>
-
+{% endif %}
 <h2>Participants</h2>
 
 {% for participant in participants %}
