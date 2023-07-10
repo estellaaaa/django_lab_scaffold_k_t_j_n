@@ -28,6 +28,7 @@ show {% if all_meetups %}upcoming{% else %}all{% endif %}
         <td align="left"><a href="{% url 'studybuddy_app:meetup.detail' meetup.id %}">{{ meetup.title }}</a></td>
         <td align="left">id: {{ meetup.id }}</td>
         <td align="left">date: {{ meetup.start_time | date:'d.m.Y H:m' }}</td>
+        <td align="left">{{meetup.participants.all | length}}</td>
     </tr>
     {% endfor %}
     </tbody>
