@@ -10,6 +10,7 @@ from ..models import Meetup
 from studybuddy_app.common.date import date_from_form
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
+from ..forms import ResourceForm  # Import your ResourceForm
 
 
 class MeetupListView(LoginRequiredMixin, generic.ListView):
@@ -124,3 +125,14 @@ def cancel_participation(request, pk):
     return HttpResponseRedirect(
         reverse("studybuddy_app:meetup.detail",
                 args=[meetup.id]))
+
+@login_required
+def resource_edit(request, pk):
+    resource = get_object_or_404(Resource, pk=pk)
+    context = {
+        "resource": resource,
+        "http_method": 'POST',
+        "action_url": reverse('studybuddy_app:resource.detail', args=(pk,)),
+        "button_text": 'Save'
+    }
+    return render(request, "studybuddy_app/resource_form.html", context)
