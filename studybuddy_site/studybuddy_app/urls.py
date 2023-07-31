@@ -5,6 +5,7 @@ from .views.meetup import MeetupListView
 from .views.meetup import MeetupDetailView
 from .views.meetupsearch import MeetupSearchListView
 from .views.meetupsearch_detail import MeetupSearchDetailView
+from .views.resource import resource_edit  # Add the resource_edit view import
 
 app_name = "studybuddy_app"
 
@@ -28,6 +29,8 @@ urlpatterns = [
     path("meetupsearch/", MeetupSearchListView.as_view(), name="meetupsearch.list"),
 
     path("meetupsearch/<int:pk>/", MeetupSearchDetailView.as_view(), name="meetupsearch.detail"),
+
+    path("resource/<int:pk>/edit", resource_edit, name="resource.edit"),  # Add the resource edit path
 
 ]
 
