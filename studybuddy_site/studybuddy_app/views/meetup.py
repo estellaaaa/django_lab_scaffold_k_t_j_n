@@ -10,7 +10,7 @@ from ..models import Meetup
 from studybuddy_app.common.date import date_from_form
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.decorators import login_required
-from ..forms import ResourceForm  # Import your ResourceForm
+from ..forms import ResourceForm 
 
 
 class MeetupListView(LoginRequiredMixin, generic.ListView):
